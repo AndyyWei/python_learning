@@ -1,0 +1,129 @@
+# codeing:utf-8
+# 写一个存放学生信息的数组
+student_info = []
+
+# 定义软件显示界面（操作提示信息）
+def operration_instruction():
+    print('=' * 50)
+    print('学生宿舍管理系统 v1')
+    print('1:增加一个新入住学生信息')
+    print('2:删除一个入住学生信息')
+    print('3:修改一个入住学生信息')
+    print('4:查询一个入住学生信息')
+    print('5:显示信息所有入住学生信息')
+    print('6:显示信息请假学生信息')
+    print('7:退出系统')
+    print('=' * 50)
+
+# 定义增加入住学生信息函数
+def add_info():
+    # 定义一个新的字典，用来存储一个新的学生信息
+    new_info = {}
+    new_info['student_name'] = input('请输入新入住学生姓名：')
+    new_info['student_dormitory'] = input('请输入新入住学生的宿舍+床位号（如106-1）：')
+    new_info['student_class'] = input('请输入新入住学生班级：')
+    new_info['student_status'] = input('请输入新入住学生的状态（在校或请假）：')
+    # 将该字典加入学生信息列表中，采用追加的方式
+    student_info.append(new_info)
+
+# 定义删除学生住宿信息函数
+def delete_info():
+    del_name = input('请输入要退宿的学生姓名：')
+    find_flag = False
+    for line in student_info:
+        if line['student_name'] == del_name:
+            find_flag = True
+            student_info.remove(line)
+            break
+        if find_flag:
+            print("该学生信息已删除")
+        else:
+            print("系统中不存在该生信息，请查证后重试")
+
+# 定义修改学生住宿信息函数
+def update_info():
+    old_name = input('请输入需要修改信息的学生姓名：')
+    flag = 0
+    for line in student_info:
+        if line['student_name'] == old_name:
+            line['student_name'] == print('请输入新的姓名：')
+            line['student_dormitory'] == print('请输入新的宿舍号+床号（如107-2）：')
+            line['student_class'] == print('请输入新的班级：')
+            line['student_status'] == print('请输入新的状态：')
+            flag = True
+            break
+        if flag:
+            print('已修改好')
+        else:
+            print('系统内不存在该生信息，请查证后再试')
+
+# 定义查找某个学生信息的函数
+def find_one_info():
+    find_name = input('请输入需要查找的学生姓名：')
+    find_flag = 0 # 0表示没找到，默认没找到
+    for temp in student_info:
+        if find_name == temp['student_name']:
+            print('姓名\t宿舍号+床号\t班级\t\入住情况')
+            print('%s\t%s\t%s\t%s' % (temp['student_name'], temp['student_dormitory'], temp['student_class'], temp['student_status']))
+            find_flag = 1 #这里1表示找到
+            break
+        if find_flag == 0:
+            print('系统中无该生信息，请查证后重试')
+
+# 定查找所有学生信息的函数
+def find_all_info():
+    print('学生名字\t宿舍号+床位号\t班级\t入住情况')
+    for temp in student_info:
+        print('%s\t%s\t%s\t%s' % (temp['student_name'], temp['student_dormitory'], temp['student_class'], temp['student_status']))
+
+# 定义一个显示所有请假学生信息的函数
+def find_leave():
+    leave_flag = 0 # 默认表示没有找到
+    print('学生名字\t宿舍号+床位号\t班级\t入住情况')
+    for temp in student_info:
+        if temp['student_status'] == '请假':
+            print('%s\t%s\t%s\t%s' % (temp['student_name'], temp['student_dormitory'], temp['student_class'], temp['student_status']))
+            leave_flag = 1 # 表示找到了
+    # 判断是否找到
+    if leave_flag == 0:
+        print('无学生请假')
+
+# 定义一个主函数
+def main():
+    operration_instruction()
+    while True:
+        # 获取用户选择
+        num = input('请输入操作序号：')
+        if num.isdigit():
+            num = int(num)
+            if num == 1:
+                print('1:请添加一个新入住学生信息')
+                add_info()
+            if num == 2:
+                print('2:删除一个学生信息')
+                delete_info()
+            if num == 3:
+                print('3:修改一个学生信息')
+                update_info()
+            if num == 4:
+                print('4:查询一个学生信息')
+                find_one_info()
+            if num == 5:
+                print('5:显示所有学生住宿信息')
+                print()
+                find_all_info()
+            if num == 6:
+                print('6:显示所有请假的学生信息')
+                find_leave()
+            elif num == 7:
+                print('已退出系统')
+                break
+            else:
+                print('输入有误，目前只有1-7项功能')
+                continue
+            print('')
+        else:
+            print('输入有误，请重新输入1-7')
+
+# 调用主函数
+main()
